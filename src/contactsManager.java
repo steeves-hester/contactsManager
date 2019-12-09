@@ -34,11 +34,10 @@ public class contactsManager {
                 String ans = sc.nextLine();
                 if(ans.equalsIgnoreCase("yes") || ans.equalsIgnoreCase("y")) {
                     mainMenu();
-//
                 }
                     break;
-
             case 2:
+                search();
                 break;
             case 3:
                 break;
@@ -65,6 +64,28 @@ public class contactsManager {
             e.printStackTrace();
         }
 
+    }
+
+
+    public static void search(ArrayList<String> contacts) {
+        Scanner sc = new Scanner(System.in);
+        Path path = Paths.get(dir);
+        Path filePath = Paths.get(dir, fileName);
+        try {
+            List<String> names = Files.readAllLines(filePath);
+            List<String> tempContact = new ArrayList<>();
+            System.out.println("Enter the name you are looking for:");
+            String contactName = sc.nextLine();
+            for (String name : names){
+                if (name.equals(contactName.getName())) {
+                    tempContact.add(name);
+                    System.out.println(tempContact);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
