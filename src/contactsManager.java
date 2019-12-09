@@ -14,6 +14,43 @@ public class contactsManager {
     final static String fileName = "contacts.txt";
 
 
+    public static void mainMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*----------Contacts Manager----------*");
+        System.out.println("1. Show All Contacts");
+        System.out.println("2. Search By Name");
+        System.out.println("3. Add Contact");
+        System.out.println("4. Delete Contact");
+        System.out.println("5. Exit");
+        System.out.println("(Enter an option 1, 2, 3, 4, 5)");
+        int input = sc.nextInt();
+        sc.nextLine();
+
+        switch (input) {
+
+            case 1:
+                showAll();
+                System.out.println("Would you like to return to the main menu? Y/N");
+                String ans = sc.nextLine();
+                if(ans.equalsIgnoreCase("yes") || ans.equalsIgnoreCase("y")) {
+                    mainMenu();
+//
+                }
+                    break;
+
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
+
+
+    }
+
     public static void showAll() {
         Path path = Paths.get(dir);
         Path filePath = Paths.get(dir, fileName);
@@ -61,30 +98,8 @@ public class contactsManager {
             e.printStackTrace();
         }
 
+        mainMenu();
 
-//        begin program user interaction
-
-        System.out.println("*----------Contacts Manager----------*");
-        System.out.println("1. Show All Contacts");
-        System.out.println("2. Search By Name");
-        System.out.println("3. Add Contact");
-        System.out.println("4. Delete Contact");
-        System.out.println("5. Exit");
-        System.out.println("(Enter an option 1, 2, 3, 4, 5)");
-        int input = sc.nextInt();
-        switch (input) {
-            case 1:
-                showAll();
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-        }
 
 
     }
