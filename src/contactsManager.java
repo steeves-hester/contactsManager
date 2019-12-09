@@ -10,33 +10,83 @@ import java.util.Scanner;
 
 public class contactsManager {
 
-    Scanner sc = new Scanner(System.in);
     final static String dir = "data";
     final static String fileName = "contacts.txt";
 
+
+    public static void showAll() {
+        Path path = Paths.get(dir);
+        Path filePath = Paths.get(dir, fileName);
+        try {
+            List<String> names = Files.readAllLines(filePath);
+            System.out.println("*----------All Contacts----------*");
+            for (String name : names){
+                System.out.println(name.toUpperCase());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     public static void main(String[] args) {
-
-        Path path = Paths.get(dir + "/" + fileName).normalize();
-        //normalize will take the direction that you give it and normalize it into a string
+        Scanner sc = new Scanner(System.in);
+        Path path = Paths.get(dir);
         //why is this one inside the psvm and not outside with the others
+        Path filePath = Paths.get(dir, fileName);
 
-        if(!Files.exists(path)){
+
+        if (!Files.exists(path)) {
             try {
                 Files.createDirectories(path);
+                try {
+                    Files.createFile(filePath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         List<String> contacts = new ArrayList<>();
-        contacts.add("Fer");
-        contacts.add("Sophie");
-        contacts.add("Vivian");
+        contacts.add("Fer | 2104354444");
+        contacts.add("Sophie | 2108388883");
+        contacts.add("Vivian | 2109356789");
 
         try {
-            Files.write(path, contacts);
+            Files.write(filePath, contacts);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+//        begin program user interaction
+
+        System.out.println("*----------Contacts Manager----------*");
+        System.out.println("1. Show All Contacts");
+        System.out.println("2. Search By Name");
+        System.out.println("3. Add Contact");
+        System.out.println("4. Delete Contact");
+        System.out.println("5. Exit");
+        System.out.println("(Enter an option 1, 2, 3, 4, 5)");
+        int input = sc.nextInt();
+        switch (input) {
+            case 1:
+                showAll();
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
+
+
     }
 
 
