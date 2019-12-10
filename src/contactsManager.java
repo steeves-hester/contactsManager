@@ -2,9 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -69,7 +67,6 @@ public class contactsManager {
     }
 
     public static void showAll() {
-        Path path = Paths.get(dir);
         Path filePath = Paths.get(dir, fileName);
         try {
             List<String> names = Files.readAllLines(filePath);
@@ -87,13 +84,11 @@ public class contactsManager {
 
     public static void search() {
         Scanner sc = new Scanner(System.in);
-        Path path = Paths.get(dir);
         Path filePath = Paths.get(dir, fileName);
         try {
             List<String> names = Files.readAllLines(filePath);
             List<String> tempContact = new ArrayList<>();
             System.out.println("Enter the name you are looking for:");
-            //we're here, trying to figure out how to search. String.split at the | ??
             String contactName = sc.nextLine();
             String phoneBook = contactName.toLowerCase();
             for (String name : names){
@@ -111,7 +106,6 @@ public class contactsManager {
 
     public static void add() {
         Scanner sc = new Scanner(System.in);
-//        Path path = Paths.get(dir);
         Path filePath = Paths.get(dir, fileName);
 
             System.out.println("Enter name of the new contact:");
@@ -119,6 +113,7 @@ public class contactsManager {
             System.out.println("Enter phone number of the new contact:");
             String contactNumber = sc.nextLine();
             contacts.add(contactName + " | " + contactNumber);
+             System.out.println("Added " + contactName + " to contacts." );
         try {
             Files.write(filePath, contacts);
         } catch (IOException e) {
@@ -132,13 +127,11 @@ public class contactsManager {
     public static void delete() {
 
         Scanner sc = new Scanner(System.in);
-//        Path path = Paths.get(dir);
         Path filePath = Paths.get(dir, fileName);
         try {
             List<String> names = Files.readAllLines(filePath);
-//            List<String> tempContact = new ArrayList<>();
+
             System.out.println("Who are you wanting to delete?");
-            //we're here, trying to figure out how to search. String.split at the | ??
             String contactName = sc.nextLine();
             String phoneBook = contactName.toLowerCase();
             for (String name : names){
@@ -146,46 +139,21 @@ public class contactsManager {
                 if (name.contains(phoneBook)) {
                     contacts.remove(name);
                     Files.write(filePath, contacts);
+                    System.out.println("Deleted " + contactName + " from contacts." );
                 }
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-//
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println("What is the name of the person you want to delete?");
-//        String search = sc.nextLine();
-//        Path path = Paths.get(dir);
-//        Path filePath = Paths.get(dir, fileName);
-//        int place = -1;
-//        boolean found = false;
-//        String phoneBook = search.toLowerCase();
-//        for (String contact : contacts) {
-//            if (search.equals(phoneBook)) {
-//                found = true;
-//                place = contacts.indexOf(contact);
-//            }
-//        }
-//
-//        if (found) {
-//            contacts.remove(place);
-//        } else {
-//            System.out.println("Could not find that contact.");
-//        }
-//        try {
-//            Files.write(filePath, contacts);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
     }
 
 
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+
         Path path = Paths.get(dir);
-        //why is this one inside the psvm and not outside with the others
         Path filePath = Paths.get(dir, fileName);
 
 
