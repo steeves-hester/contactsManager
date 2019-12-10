@@ -12,6 +12,7 @@ public class contactsManager {
 
     final static String dir = "data";
     final static String fileName = "contacts.txt";
+    public static List<String> contacts;
 
 
     public static void mainMenu() {
@@ -38,10 +39,27 @@ public class contactsManager {
                     break;
             case 2:
                 search();
+                System.out.println("Would you like to return to the main menu? Y/N");
+                String ans2 = sc.nextLine();
+                if(ans2.equalsIgnoreCase("yes") || ans2.equalsIgnoreCase("y")) {
+                    mainMenu();
+                }
                 break;
             case 3:
+                add();
+                System.out.println("Would you like to return to the main menu? Y/N");
+                String ans3 = sc.nextLine();
+                if(ans3.equalsIgnoreCase("yes") || ans3.equalsIgnoreCase("y")) {
+                    mainMenu();
+                }
                 break;
             case 4:
+                delete();
+                System.out.println("Would you like to return to the main menu? Y/N");
+                String ans4 = sc.nextLine();
+                if(ans4.equalsIgnoreCase("yes") || ans4.equalsIgnoreCase("y")) {
+                    mainMenu();
+                }
                 break;
             case 5:
                 break;
@@ -91,6 +109,55 @@ public class contactsManager {
         }
     }
 
+    public static void add() {
+        Scanner sc = new Scanner(System.in);
+        Path path = Paths.get(dir);
+        Path filePath = Paths.get(dir, fileName);
+
+            System.out.println("Enter name of the new contact:");
+            String contactName = sc.nextLine();
+            System.out.println("Enter phone number of the new contact:");
+            String contactNumber = sc.nextLine();
+            contacts.add(contactName + " | " + contactNumber);
+        try {
+            Files.write(filePath, contacts);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    public static void delete() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("What is the name of the person you want to delete?");
+        String search = sc.nextLine();
+        Path path = Paths.get(dir);
+        Path filePath = Paths.get(dir, fileName);
+        int place = -1;
+        boolean found = false;
+        String phoneBook = search.toLowerCase();
+        for (String contact : contacts) {
+            if (search.equals(phoneBook)) {
+                found = true;
+                place = contacts.indexOf(contact);
+            }
+        }
+
+        if (found) {
+            contacts.remove(place);
+        } else {
+            System.out.println("Could not find that contact.");
+        }
+        try {
+            Files.write(filePath, contacts);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -104,6 +171,7 @@ public class contactsManager {
                 Files.createDirectories(path);
                 try {
                     Files.createFile(filePath);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -111,7 +179,7 @@ public class contactsManager {
                 e.printStackTrace();
             }
         }
-        List<String> contacts = new ArrayList<>();
+        contacts = new ArrayList<>();
         contacts.add("fer | 2104354444");
         contacts.add("sophie | 2108388883");
         contacts.add("vivian | 2109356789");
