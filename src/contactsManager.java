@@ -67,7 +67,7 @@ public class contactsManager {
     }
 
 
-    public static void search(ArrayList<String> contacts) {
+    public static void search() {
         Scanner sc = new Scanner(System.in);
         Path path = Paths.get(dir);
         Path filePath = Paths.get(dir, fileName);
@@ -75,9 +75,12 @@ public class contactsManager {
             List<String> names = Files.readAllLines(filePath);
             List<String> tempContact = new ArrayList<>();
             System.out.println("Enter the name you are looking for:");
+            //we're here, trying to figure out how to search. String.split at the | ??
             String contactName = sc.nextLine();
+            String phoneBook = contactName.toLowerCase();
             for (String name : names){
-                if (name.equals(contactName.getName())) {
+
+                if (name.contains(phoneBook)) {
                     tempContact.add(name);
                     System.out.println(tempContact);
                 }
@@ -109,9 +112,9 @@ public class contactsManager {
             }
         }
         List<String> contacts = new ArrayList<>();
-        contacts.add("Fer | 2104354444");
-        contacts.add("Sophie | 2108388883");
-        contacts.add("Vivian | 2109356789");
+        contacts.add("fer | 2104354444");
+        contacts.add("sophie | 2108388883");
+        contacts.add("vivian | 2109356789");
 
         try {
             Files.write(filePath, contacts);
