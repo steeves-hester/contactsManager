@@ -43,12 +43,15 @@ public class contactsManager {
 
     public static void mainMenu() {
         Scanner sc = new Scanner(System.in);
+
+
         System.out.println("*----------Contacts Manager----------*");
         System.out.println("1. Show All Contacts");
         System.out.println("2. Search By Name");
-        System.out.println("3. Add Contact");
-        System.out.println("4. Delete Contact");
-        System.out.println("5. Exit");
+        System.out.println("3. Search By Number");
+        System.out.println("4. Add Contact");
+        System.out.println("5. Delete Contact");
+        System.out.println("6. Exit");
         System.out.println("(Enter an option 1, 2, 3, 4, 5)");
         int input = sc.nextInt();
         sc.nextLine();
@@ -72,22 +75,33 @@ public class contactsManager {
                 }
                 break;
             case 3:
-                add();
+                searchNum();
                 System.out.println("Would you like to return to the main menu? Y/N");
                 String ans3 = sc.nextLine();
                 if(ans3.equalsIgnoreCase("yes") || ans3.equalsIgnoreCase("y")) {
                     mainMenu();
                 }
                 break;
+
             case 4:
-                delete();
+                add();
                 System.out.println("Would you like to return to the main menu? Y/N");
                 String ans4 = sc.nextLine();
                 if(ans4.equalsIgnoreCase("yes") || ans4.equalsIgnoreCase("y")) {
                     mainMenu();
                 }
                 break;
+
+
             case 5:
+                delete();
+                System.out.println("Would you like to return to the main menu? Y/N");
+                String ans5 = sc.nextLine();
+                if(ans5.equalsIgnoreCase("yes") || ans5.equalsIgnoreCase("y")) {
+                    mainMenu();
+                }
+                break;
+            case 6:
                 break;
         }
 
@@ -99,6 +113,10 @@ public class contactsManager {
         try {
             List<String> names = Files.readAllLines(filePath);
             System.out.println("*----------All Contacts----------*");
+            System.out.println(" Photo          Name           Number");
+            System.out.println("-------------------------------------");
+
+
             for (String name : names){
                 System.out.println(name.toUpperCase());
             }
@@ -116,6 +134,7 @@ public class contactsManager {
         try {
             List<String> names = Files.readAllLines(filePath);
             List<String> tempContact = new ArrayList<>();
+
             System.out.println("Enter the name you are looking for:");
             String contactName = sc.nextLine();
             String phoneBook = contactName.toLowerCase();
@@ -124,6 +143,29 @@ public class contactsManager {
                 if (name.contains(phoneBook)) {
                     tempContact.add(name);
                     System.out.println(tempContact);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void searchNum() {
+        Scanner sc = new Scanner(System.in);
+        Path filePath = Paths.get(dir, fileName);
+        try {
+            List<String> numbers = Files.readAllLines(filePath);
+            List<String> tempNumber = new ArrayList<>();
+
+            System.out.println("Enter the number you are looking for:");
+            String contactName = sc.nextLine();
+            String phoneBook = contactName.toLowerCase();
+            for (String number : numbers){
+
+                if (number.contains(phoneBook)) {
+                    tempNumber.add(number);
+                    System.out.println(tempNumber);
                 }
             }
 
@@ -148,8 +190,8 @@ public class contactsManager {
             contacts.add(girlHeadTop + girlEyes + contactName + " | " + contactNumber + "\n" + girlHeadBottom);
         } else if (boyGirlother.equalsIgnoreCase("other")) {
             contacts.add(otherHeadTop + otherEyes + contactName + " | " + contactNumber + "\n" + otherHeadBottom);
-        }
-             System.out.println("Added " + contactName + " to contacts." );
+        }else{ contacts.add(otherHeadTop + otherEyes + contactName + " | " + contactNumber + "\n" + otherHeadBottom);
+             System.out.println("Added " + contactName + " to contacts." );}
         try {
             Files.write(filePath, contacts);
         } catch (IOException e) {
@@ -160,7 +202,7 @@ public class contactsManager {
     }
 
 
-    public static void delete() {
+    public static void delete(){
 
         Scanner sc = new Scanner(System.in);
         Path filePath = Paths.get(dir, fileName);
@@ -206,23 +248,22 @@ public class contactsManager {
                 e.printStackTrace();
             }
         }
-        contacts = new ArrayList<>();
-        contacts.add(boyHeadTop + boyEyes + "david | 2108769832" + "\n" + boyHeadBottom);
-        contacts.add(boyHeadTop + boyEyes + "fer | 2102020202" + "\n" + boyHeadBottom);
-        contacts.add(girlHeadTop + girlEyes + "sophie | 2109456789" + "\n" + girlHeadBottom);
-        contacts.add(girlHeadTop + girlEyes + "vivian | 2101156339" + "\n" + girlHeadBottom);
-
         try {
-            Files.write(filePath, contacts);
+            contacts = Files.readAllLines(filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
+            try {
+                Files.write(filePath, contacts);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        mainMenu();
+            mainMenu();
 
-
+        }
 
     }
 
 
-}
+
