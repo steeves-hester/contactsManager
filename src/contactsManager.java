@@ -11,6 +11,34 @@ public class contactsManager {
     final static String dir = "data";
     final static String fileName = "contacts.txt";
     public static List<String> contacts;
+    public static String boyHeadTop = "      ////^\\\\\\\\\n" +
+            "      | ^   ^ |\n";
+    public static String boyEyes = "     @ (o) (o) @ ";
+    public static String boyHeadBottom = "      |   <   |\n" +
+            "      |  ___  |\n" +
+            "       \\_____/\n" +
+            "     ____|  |____\n" +
+            "*------------------------*";
+    public static String girlHeadTop = " /////////////\\\\\\\\\n" +
+            "(((((((((((((( \\\\\\\\\n" +
+            "))) ~~      ~~  (((\n";
+    public static String girlEyes = "((( (*)     (*) ))) ";
+    public static String girlHeadBottom = ")))     <       (((\n" +
+            "((( '\\______/`  )))\n" +
+            ")))\\___________/(((\n" +
+            "       _) (_\n" +
+            "*------------------------*";
+    public static String otherHeadTop =".--.              .--.\n" +
+            ": (\\ \". _......_ .\" /) :\n" +
+            "'.    `        `    .'\n";
+    public static String otherEyes = "/     0}      {0     \\ ";
+    public static String otherHeadBottom =  "|       /      \\       |\n" +
+            "|     /'        `\\     |\n" +
+            "\\   | .  .==.  . |   /\n" +
+            "'._ \\.' \\__/ './ _.'\n" +
+            "/  ``'._-''-_.'``  \\\n" +
+            "        `--`\n" +
+            "*------------------------*";
 
 
     public static void mainMenu() {
@@ -112,7 +140,15 @@ public class contactsManager {
             String contactName = sc.nextLine();
             System.out.println("Enter phone number of the new contact:");
             String contactNumber = sc.nextLine();
-            contacts.add(contactName + " | " + contactNumber);
+        System.out.println("Boy/Girl/Other:");
+        String boyGirlother = sc.nextLine();
+        if (boyGirlother.equalsIgnoreCase("boy")){
+            contacts.add(boyHeadTop + boyEyes + contactName + " | " + contactNumber + "\n" + boyHeadBottom);
+        } else if (boyGirlother.equalsIgnoreCase("girl")) {
+            contacts.add(girlHeadTop + girlEyes + contactName + " | " + contactNumber + "\n" + girlHeadBottom);
+        } else if (boyGirlother.equalsIgnoreCase("other")) {
+            contacts.add(otherHeadTop + otherEyes + contactName + " | " + contactNumber + "\n" + otherHeadBottom);
+        }
              System.out.println("Added " + contactName + " to contacts." );
         try {
             Files.write(filePath, contacts);
@@ -171,9 +207,10 @@ public class contactsManager {
             }
         }
         contacts = new ArrayList<>();
-        contacts.add("fer | 2104354444");
-        contacts.add("sophie | 2108388883");
-        contacts.add("vivian | 2109356789");
+        contacts.add(boyHeadTop + boyEyes + "david | 2108769832" + "\n" + boyHeadBottom);
+        contacts.add(boyHeadTop + boyEyes + "fer | 2102020202" + "\n" + boyHeadBottom);
+        contacts.add(girlHeadTop + girlEyes + "sophie | 2109456789" + "\n" + girlHeadBottom);
+        contacts.add(girlHeadTop + girlEyes + "vivian | 2101156339" + "\n" + girlHeadBottom);
 
         try {
             Files.write(filePath, contacts);
